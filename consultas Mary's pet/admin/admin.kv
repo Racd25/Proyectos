@@ -1,0 +1,3728 @@
+#:import hex kivy.utils.get_color_from_hex
+
+<BotonOscuro@Button>:
+	background_normal: ''
+	background_color: hex('#393939')
+
+<LabelOscuro@Label>:
+	canvas.before:
+		Color:
+			rgba: hex('#393939')
+		Rectangle:
+			size: self.size
+			pos: self.pos
+
+
+<AdminRV>:
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(36)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
+
+<SelectableHistoriaLabel>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: hex('#C9F3EF') if self.selected else hex('#F0F0F0')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size_hint_y: None
+        height: 40
+        spacing: 10
+        padding: 5
+
+        Label:
+            id: _hashtag
+            size_hint_x: 0.2
+            text: ''
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+        	color: (0,0,0,1)
+        Label:
+            id: _fecha
+            size_hint_x: 0.8
+            color: (0,0,0,1)
+
+<SelectableUsuarioLabel>:
+    # Fondo de selección
+    canvas.before:
+        Color:
+            rgba: hex('#C9F3EFFF') if self.selected else hex('#F0F0F0FF')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    Label:
+        id: _hashtag
+        size_hint_x: .05
+        color: (0, 0, 0, 1)
+
+    Label:
+        id: _nombre
+        size_hint_x: .30
+        color: (0, 0, 0, 1)
+
+    Label:
+        id: _username
+        size_hint_x: .15
+        color: (0, 0, 0, 1)
+
+    Label:
+        id: _tipo
+        size_hint_x: .15
+        color: (0, 0, 0, 1)
+
+    Label:
+        id: _ci2
+        size_hint_x: .15
+        color: (0, 0, 0, 1)
+
+    Label:
+        id: _cmvb
+        size_hint_x: .10
+        color: (0, 0, 0, 1)
+
+    Label:
+        id: _mpps
+        size_hint_x: .10
+        color: (0, 0, 0, 1)
+<SelectableVentaLabel>:
+	canvas.before:
+        Color:
+            rgba: hex('#C9F3EF') if self.selected else hex('#F0F0F0')
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    Label:
+        id: _hashtag
+        size_hint_x: .05
+        color: (0,0,0,1)
+    Label:
+        id: _username
+        size_hint_x: .2
+        color: (0,0,0,1)
+    Label:
+        id: _cantidad
+        size_hint_x: .2
+        color: (0,0,0,1)
+    Label:
+        id: _total
+        size_hint_x: .15
+        color: (0,0,0,1)
+    Label:
+        id: _time
+        size_hint_x: .2
+        color: (0,0,0,1)
+    Label:
+        id: _date
+        size_hint_x: .2
+        color: (0,0,0,1)
+
+<ItemVentaLabel>:
+    canvas.before:
+        Color:
+            rgba: hex('#F0F0F0')
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    Label:
+        id: _hashtag
+        size_hint_x: .05
+        color: (0,0,0,1)
+    Label:
+        id: _codigo
+        size_hint_x: .25
+        color: (0,0,0,1)
+    Label:
+        id: _articulo
+        size_hint_x: .25
+        color: (0,0,0,1)
+    Label:
+        id: _cantidad
+        size_hint_x: .15
+        color: (0,0,0,1)
+    Label:
+        id: _precio_por_articulo
+        size_hint_x: .25
+        color: (0,0,0,1)
+    Label:
+        id: _total
+        size_hint_x: .05
+        color: (0,0,0,1)
+
+
+<ServicioPopup>:
+    size_hint: .5, .5
+    auto_dismiss: False
+    title: ''
+    BoxLayout:
+	    orientation: 'vertical'
+	    padding: .05
+	    Label:
+	    	size_hint_y: .1
+	    	id: servicio_info_1
+	    Label:
+	    	id: no_valid_notif
+	    	size_hint_y: .1
+	    TextInput: 
+			size_hint_y: .2
+			id: servicio_codigo
+			multiline: False
+			hint_text: 'Codigo'
+			write_tab: False
+		TextInput: 
+			id: servicio_nombre
+			size_hint_y: .2
+			multiline: False
+			hint_text: 'Nombre de servicio'
+			write_tab: False
+		BoxLayout:
+			size_hint_y: .2
+			TextInput:
+				size_hint_x: .5
+				id: servicio_precio
+				multiline: False
+				hint_text: 'Precio'
+				write_tab: False
+			ToggleButton: 
+				size_hint_x: .25
+				id: veterinaria_tipo
+				text: 'Veterinaria'
+				group: 'servicio_tipo'
+			ToggleButton: 
+				size_hint_x: .25
+				id: peluqueria_tipo
+				text: 'Peluquería'
+				group: 'servicio_tipo'
+		BoxLayout:
+			size_hint_y: .2
+		    Button:
+		    	text: 'Aceptar'
+		    	on_release: root.verificar(servicio_codigo.text, servicio_nombre.text, servicio_precio.text, veterinaria_tipo.state, peluqueria_tipo.state)
+		    Button:
+		        text: 'Salir sin hacer cambios'
+		        on_press: root.dismiss()
+
+
+<UsuarioPopup>:
+    size_hint: .5, .5
+    auto_dismiss: False
+    title: ''
+    BoxLayout:
+	    orientation: 'vertical'
+	    padding: .05
+	    Label:
+	    	size_hint_y: .1
+	    	id: usuario_info_1
+	    Label:
+	    	id: no_valid_notif
+	    	size_hint_y: .1
+	    TextInput: 
+			size_hint_y: .2
+			id: usuario_username
+			multiline: False
+			hint_text: 'Username'
+			write_tab: False
+		TextInput: 
+			id: usuario_nombre
+			size_hint_y: .2
+			multiline: False
+			hint_text: 'Nombre'
+			write_tab: False
+		BoxLayout:
+			size_hint_y: .2
+			TextInput:
+				size_hint_x: .5
+				id: usuario_password
+				multiline: False
+				hint_text: 'Password'
+				password: True
+				write_tab: False
+			ToggleButton: 
+				size_hint_x: .25
+				id: admin_tipo
+				text: 'Admin'
+				group: 'usuario_tipo'
+			ToggleButton: 
+				size_hint_x: .25
+				id: trabajador_tipo
+				text: 'Trabajador'
+				group: 'usuario_tipo'
+		BoxLayout:
+			size_hint_y: .2
+		    Button:
+		    	text: 'Aceptar'
+		    	on_release: root.verificar(usuario_username.text, usuario_nombre.text, usuario_password.text, admin_tipo.state, trabajador_tipo.state)
+		    Button:
+		        text: 'Salir sin hacer cambios'
+		        on_press: root.dismiss()
+
+
+<VetPopup>:
+    size_hint: .5, .5
+    auto_dismiss: False
+    title: ''
+    BoxLayout:
+	    orientation: 'vertical'
+	    padding: .05
+	    Label:
+	    	size_hint_y: .1
+	    	id: vet_info_1
+	    Label:
+	    	id: no_valid_notif
+	    	size_hint_y: .1
+		TextInput: 
+			id: vet_nombre
+			size_hint_y: .2
+			multiline: False
+			hint_text: 'Nombre'
+			write_tab: False
+	    TextInput: 
+			size_hint_y: .2
+			id: vet_ci
+			multiline: False
+			hint_text: 'C.I:'
+			write_tab: False
+		BoxLayout:
+			size_hint_y: .2
+			TextInput:
+				size_hint_x: .5
+				id: CMVB
+				multiline: False
+				hint_text: 'CMVB'
+				write_tab: False
+			TextInput: 
+				size_hint_x: .25
+				id: MPPS
+				hint_text: 'MPPS'
+		BoxLayout:
+			size_hint_y: .2
+		    Button:
+		    	text: 'Aceptar'
+		    	on_release: root.verificar1(vet_ci.text, vet_nombre.text, CMVB.text,MPPS.text)
+		    Button:
+		        text: 'Salir sin hacer cambios'
+		        on_press: root.dismiss()
+
+
+
+<VistaUsuarios>:
+    name: 'Usuarios'
+    BoxLayout:
+        BoxLayout:
+            padding: .5
+            orientation: 'vertical'
+            BoxLayout:
+                size_hint_y: .05
+                spacing: .5
+                LabelOscuro:
+                    text: '#'
+                    size_hint_x: .05
+                LabelOscuro:
+                    text: 'Nombre'
+                    size_hint_x: .30
+                LabelOscuro:
+                    text: 'Username'
+                    size_hint_x: .15
+                LabelOscuro:
+                    text: 'Tipo'
+                    size_hint_x: .15
+                LabelOscuro:
+                    text: 'C.I'
+                    size_hint_x: .15
+                LabelOscuro:
+                    text: 'CMVB'
+                    size_hint_x: .10
+                LabelOscuro:
+                    text: 'MPPS'
+                    size_hint_x: .10
+
+            AdminRV:
+                id: rv_usuarios
+                size_hint_y: .89
+                viewclass: 'SelectableUsuarioLabel'
+        BoxLayout:
+            spacing: .5
+            size_hint_x: .2
+            orientation: 'vertical'
+            padding: .5
+            BotonOscuro:
+                text: 'Agregar Usuario'
+                on_release: root.agregar_usuario()
+            BotonOscuro:
+                text: 'Modificar Usuario'
+                on_release: root.modificar_usuario()
+            BotonOscuro:
+                text: 'Eliminar Usuario'
+                on_release: root.eliminar_usuario()
+            BotonOscuro:
+                text: 'Agregar Veterinario'
+                on_release: root.agregar_vet()
+            BotonOscuro:
+                text: 'Modificar Veterinario'
+                on_release: root.modificar_vet()
+            BotonOscuro:
+                text: 'Eliminar Veterinario'
+                on_release: root.eliminar_vet()
+
+
+<CustomDropDown>:
+	canvas.before:
+		Color:
+			rgba: hex('#393939')
+		Rectangle:
+			size: self.size
+			pos: self.pos
+    Button:
+        text: 'Consultas'
+        size_hint_y: None
+        height: 44
+        on_release: root.vista(self.text)
+    Button:
+        text: 'Pacientes'
+        size_hint_y: None
+        height: 44
+        on_release: root.vista(self.text)
+    Button:
+        text: 'Agenda'
+        size_hint_y: None
+        height: 44
+        on_release: root.vista(self.text)
+	Button:
+        text: 'Usuarios'
+        size_hint_y: None
+        height: 44
+        on_release: root.vista(self.text) 
+
+<AdminWindow>:
+	id: main_win
+	orientation: 'vertical'
+	canvas.before:
+		Color:
+			rgba: hex('#159F9A')
+		Rectangle:
+			size: self.size
+			pos: self.pos
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint_y: .1
+		BoxLayout:
+			padding: .1
+			spacing: .2
+			BotonOscuro:
+				id: cambiar_vista
+				size_hint_x: .2
+				text: 'Cambiar Vista'
+				on_release: root.cambiar_vista()
+			Label:
+				id: mostrat_usuario
+				size_hint_x: .2
+				color: hex('#000000')
+			Label:
+				size_hint_x: .2
+			Label:
+				id: notification
+				size_hint_x: .2
+			BotonOscuro:
+				id: boton_signout
+				size_hint_x: .2
+				text: 'Salir de Cuenta'
+				on_release: root.salir()
+
+	ScreenManager:
+        id: vista_manager
+		canvas.before:
+			Color:
+				rgba: hex('#FFFFFF')
+			Rectangle:
+				size: self.size
+				pos: self.pos
+		VistaPacientes:
+		    id: vista_pacientes
+        VistaConsultas:
+		    id: vista_consultas
+		VistaUsuarios:
+			id: vista_usuarios
+		VistaAgenda:
+			id: vista_agenda
+
+
+
+    BoxLayout:
+    	size_hint_y:.05
+
+
+<VistaConsultas>:
+    name: 'Consultas'
+    ScrollView:
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 10
+            spacing: 8
+            size_hint_y: None
+            height: self.minimum_height
+            Label:
+                id: notificacion  # ← ¡ES IMPORTANTE QUE ESTE ID EXISTA!
+                text: ''
+                color: (1, 0, 0, 1)
+                size_hint_y: None
+                height: 30
+
+            # Título: DATOS DEL PROPIETARIO
+            LabelOscuro:
+                text: 'DATOS DEL PROPIETARIO'
+                size_hint_y: None
+                height: 30
+                color: (1, 1, 1, 1)
+
+            # Campos en fila horizontal
+            BoxLayout:
+                size_hint_y: None
+                height: 60
+                spacing: 10
+                orientation: 'horizontal'
+
+                # Propietario
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    Label:
+                        text: 'Propietario:'
+                        color: (0, 0, 0, 1)
+                    TextInput:
+                        id: propietario
+                        multiline: False
+
+                # C.I.
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    Label:
+                        text: 'C.I.:'
+                        color: (0, 0, 0, 1)
+                    TextInput:
+                        id: ci
+                        multiline: False
+						input_filter: 'int'  
+
+                # Teléfono
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    Label:
+                        text: 'Teléfono:'
+                        color: (0, 0, 0, 1)
+                    TextInput:
+                        id: telefono
+                        multiline: False
+						input_filter: 'int'  
+
+                # Dirección
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    Label:
+                        text: 'Dirección:'
+                        color: (0, 0, 0, 1)
+                    TextInput:
+                        id: direccion
+                        multiline: False
+
+            # Motivo de consulta
+            BoxLayout:
+                size_hint_y: None
+                height: 30
+                spacing: 10
+                Label:
+                    text: 'Motivo de consulta:'
+                    color: (0, 0, 0, 1)
+                    size_hint_x: 0.3
+                TextInput:
+                    id: motivo_consulta
+                    multiline: False
+                    size_hint_x: 0.7
+
+            # Título: DATOS DEL ANIMAL
+            LabelOscuro:
+                text: 'DATOS DEL ANIMAL'
+                size_hint_y: None
+                height: 30
+                color: (1, 1, 1, 1)
+
+            # Datos del Animal (en filas horizontales)
+            BoxLayout:
+                size_hint_y: None
+                height: 60
+                spacing: 10
+                orientation: 'horizontal'
+
+                # Nombre del animal
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    Label:
+                        text: 'Nombre del animal:'
+                        color: (0, 0, 0, 1)
+                    TextInput:
+                        id: nombre_animal
+                        multiline: False
+
+                # Especie
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    Label:
+                        text: 'Especie:'
+                        color: (0, 0, 0, 1)
+                    TextInput:
+                        id: especie
+                        multiline: False
+
+                # Raza
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    Label:
+                        text: 'Raza:'
+                        color: (0, 0, 0, 1)
+                    TextInput:
+                        id: raza
+                        multiline: False
+
+                # Sexo
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    Label:
+                        text: 'Sexo:'
+                        color: (0, 0, 0, 1)
+                    TextInput:
+                        id: sexo
+                        multiline: False
+
+            BoxLayout:
+                size_hint_y: None
+                height: 60
+                spacing: 10
+
+                # Edad
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    Label:
+                        text: 'Edad:'
+                        color: (0, 0, 0, 1)
+                    TextInput:
+                        id: edad
+                        multiline: False
+
+                # Pelaje
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    Label:
+                        text: 'Pelaje:'
+                        color: (0, 0, 0, 1)
+                    TextInput:
+                        id: pelaje
+                        multiline: False
+
+                # C.C.
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    Label:
+                        text: 'C.C.:'
+                        color: (0, 0, 0, 1)
+                    TextInput:
+                        id: cc
+                        multiline: False
+
+                # enfermedad
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    Label:
+                        text: 'Enfermedad:'
+                        color: (0, 0, 0, 1)
+                    TextInput:
+                        id: enfermedad
+                        multiline: False
+
+            BoxLayout:
+                size_hint_y: None
+                height: 60
+                spacing: 10
+
+                # Tratamiento
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    Label:
+                        text: 'Tratamiento:'
+                        color: (0, 0, 0, 1)
+                    TextInput:
+                        id: tratamiento
+                        multiline: False
+
+            # Botones
+            BoxLayout:
+                size_hint_y: None
+                height: 40
+                spacing: 15
+                BotonOscuro:
+                    text: 'Siguiente'
+                    on_release: root.siguiente()
+                BotonOscuro:
+                    text: 'Limpiar'
+                    on_release: root.limpiar()
+
+<SelectablePacienteLabel>:
+    canvas.before:
+        Color:
+            rgba: hex('#C9F3EF') if self.selected else hex('#F0F0F0')
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    Label:
+        id: _hashtag
+        size_hint_x: .05
+        color: (0,0,0,1)
+    Label:
+        id: _nombre_propietario
+        size_hint_x: .35
+        color: (0,0,0,1)
+    Label:
+        id: _ci
+        size_hint_x: .2
+        color: (0,0,0,1)
+    Label:
+        id: _nombre_mascota
+        size_hint_x: .25
+        color: (0,0,0,1)
+    Label:
+        id: _telefono
+        size_hint_x: .15
+        color: (0,0,0,1)
+
+<SelectableExamenLabel>:
+    canvas.before:
+        Color:
+            rgba: hex('#C9F3EF') if self.selected else hex('#F0F0F0')
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    Label:
+        id: _hashtag
+        size_hint_x: .1
+        color: (0,0,0,1)
+    Label:
+        id: _fecha
+        size_hint_x: .2
+        color: (0,0,0,1)
+    Label:
+        id: _peso
+        size_hint_x: .10
+        color: (0,0,0,1)
+    Label:
+        id: _anamnesis
+        size_hint_x: .25
+        color: (0,0,0,1)
+    Label:
+        id: _diagnostico
+        size_hint_x: .35
+        color: (0,0,0,1)
+
+
+<ExamenesClinicosPopup>:
+    size_hint: .9, .8
+    auto_dismiss: False
+    title: 'Exámenes Clínicos'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+        
+        # Encabezados
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            spacing: 5
+            LabelOscuro:
+                text: '#'
+                size_hint_x: .1
+            LabelOscuro:
+                text: 'Fecha'
+                size_hint_x: .2
+            LabelOscuro:
+                text: 'Peso'
+                size_hint_x: .10
+            LabelOscuro:
+                text: 'anamnesis'
+                size_hint_x: .25
+            LabelOscuro:
+                text: 'Diagnóstico'
+                size_hint_x: .35
+        
+        # Lista de exámenes
+        AdminRV:
+            id: rv_examenes
+            viewclass: 'SelectableExamenLabel'
+        
+        # Botones
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+            
+            Button:
+                text: ' Nuevo Examen'
+                background_color: (0.2, 0.7, 0.3, 1)
+                on_release: root.nuevo_examen()
+            
+            Button:
+                text: ' Ver Detalle'
+                background_color: (0.3, 0.5, 0.8, 1)
+                on_release: root.ver_detalle_examen()
+            
+            Button:
+                text: ' Eliminar'
+                background_color: (0.9, 0.3, 0.3, 1)
+                on_release: root.eliminar_examen()
+            
+            Button:
+                text: ' Cerrar'
+                background_color: (0.6, 0.6, 0.6, 1)
+                on_release: root.dismiss()
+
+
+<HistoriasMedicasPopup>:
+    size_hint: .9, .8
+    auto_dismiss: False
+    title: 'Historias Médicas'
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+        Label:
+            id: mensaje_estado
+            size_hint_y: None
+            height: 30
+            text: ""
+            color: 0, 0, 0, 1
+            halign: 'center'
+            text_size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: 0.7
+            spacing: 5
+
+            LabelOscuro:
+                text: 'HISTORIAS DERMATOLÓGICAS'
+                size_hint_y: None
+                height: 30
+
+            BoxLayout:
+                size_hint_y: None
+                height: 30
+                spacing: 5
+                LabelOscuro:
+                    text: 'N°'
+                    size_hint_x: 0.2
+                LabelOscuro:
+                    text: 'Fecha'
+                    size_hint_x: 0.8
+
+            AdminRV:
+                id: rv_historias_dermatologicas
+                viewclass: 'SelectableHistoriaLabel'
+
+             
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            BotonOscuro:
+                text: ' Nueva'
+                background_color: (0.2, 0.7, 0.3, 1)
+                on_release: root.nueva_historia_der()
+
+            BotonOscuro:
+                text: ' Detalle'
+                background_color: (0.3, 0.5, 0.8, 1)
+                on_release: root.editar_historia_dermatologica()
+
+            BotonOscuro:
+                text: ' Eliminar'
+                background_color: (0.9, 0.3, 0.3, 1)
+                on_release: root.eliminar_historia_dermatologica()
+
+            BotonOscuro:
+                text: ' Cerrar'
+                background_color: (0.6, 0.6, 0.6, 1)
+                on_release: root.dismiss()
+
+     
+<RecipesPopup>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+        # Encabezados
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            spacing: 5
+            LabelOscuro:
+                text: '#'
+                size_hint_x: .1
+            LabelOscuro:
+                text: 'Fecha'
+                size_hint_x: .2
+            LabelOscuro:
+                text: 'Doctor'
+                size_hint_x: .15
+            LabelOscuro:
+                text: 'Rp'
+                size_hint_x: .15
+            LabelOscuro:
+                text: 'Ind'
+                size_hint_x: .4
+
+        # Lista de recetas
+        AdminRV:
+            id: rv_examenes
+            viewclass: 'SelectableRecipeLabel'
+
+        # Botones
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            Button:
+                text: ' Nuevo Recipe'
+                background_color: (0.2, 0.7, 0.3, 1)
+                on_release: root.nuevo_examen()
+
+            Button:
+                text: ' Ver Detalle'
+                background_color: (0.3, 0.5, 0.8, 1)
+                on_release: root.ver_detalle_recipe()
+
+            Button:
+                text: ' Eliminar'
+                background_color: (0.9, 0.3, 0.3, 1)
+                on_release: root.eliminar_recipe()
+
+            Button:
+                text: ' Cerrar'
+                background_color: (0.6, 0.6, 0.6, 1)
+                on_release: root.dismiss()
+
+<SelectableRecipeLabel>:
+    canvas.before:
+        Color:
+            rgba: (0.8, 0.95, 0.95, 1) if self.selected else (0.95, 0.95, 0.95, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        id: _hashtag
+        size_hint_x: .1
+        text: ''
+        color: (0, 0, 0, 1)
+    Label:
+        id: _fecha
+        size_hint_x: .2
+        text: ''
+        color: (0, 0, 0, 1)
+    Label:
+        id: _Doctor
+        size_hint_x: .15
+        text: ''
+        color: (0, 0, 0, 1)
+    Label:
+        id: _Rp
+        size_hint_x: .15
+        text: ''
+        color: (0, 0, 0, 1)
+    Label:
+        id: _Ind
+        size_hint_x: .4
+        text: ''
+        color: (0, 0, 0, 1)
+
+
+
+
+<DetalleRecetaPopup>:
+    layout: layout
+    lbl_veterinario: lbl_veterinario
+    lbl_cmvb: lbl_cmvb
+    lbl_paciente: lbl_paciente
+    rp: rp
+    ind: ind
+    btn_editar: btn_editar
+    btn_guardar: btn_guardar
+    btn_imprimir: btn_imprimir
+
+    BoxLayout:
+        id: layout
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+        # Datos del veterinario
+        Label:
+            id: lbl_veterinario
+            text: "Veterinario: N/A"
+            bold: True
+            size_hint_y: None
+            height: 30
+
+        Label:
+            id: lbl_cmvb
+            text: "CMVB: N/A | MPPS: N/A"
+            size_hint_y: None
+            height: 30
+
+        Label:
+            id: lbl_paciente
+            text: "Paciente: N/A"
+            bold: True
+            size_hint_y: None
+            height: 30
+
+        # Campo Rp
+        Label:
+            text: "Rp (Tratamiento):"
+            bold: True
+            size_hint_y: None
+            height: 30
+
+        TextInput:
+            id: rp
+            multiline: True
+            readonly: True
+            background_color: 0.95, 0.95, 0.95, 1
+
+        # Campo Ind
+        Label:
+            text: "Ind (Indicaciones):"
+            bold: True
+            size_hint_y: None
+            height: 30
+
+        TextInput:
+            id: ind
+            multiline: True
+            readonly: True
+            background_color: 0.95, 0.95, 0.95, 1
+
+        # Botones
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 20
+            spacing: 10
+
+            Button:
+                id: btn_editar
+                text: "Editar Receta"
+                background_color: 0.3, 0.5, 0.8, 1
+                size_hint_y: None
+                height: 50
+                on_release: root.toggle_edicion()
+
+            Button:
+                id: btn_guardar
+                text: "Guardar Cambios"
+                background_color: 0.2, 0.7, 0.3, 1
+                size_hint_y: None
+                height: 50
+                opacity: 0
+                disabled: True
+                on_release: root.guardar_cambios()
+
+            Button:
+                id: btn_imprimir
+                text: " Imprimir Receta"
+                background_color: 0.8, 0.5, 0.2, 1
+                size_hint_y: None
+                height: 50
+                on_release: root.imprimir_receta()
+            Button:
+                text: "Cancelar"
+                background_color: 0.8, 0.5, 0.2, 1
+                size_hint_y: None
+                height: 50
+                on_release: root.dismiss()
+
+
+     
+<NuevoExamenPopup>:
+    size_hint: .9, .95
+    auto_dismiss: False
+    title: 'Nuevo Examen Clínico'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+        # Mensaje de estado
+        Label:
+            id: mensaje_estado
+            size_hint_y: None
+            height: 30
+            text: ''
+            color: 1, 1, 1, 1
+
+        ScrollView:
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+
+                # Anamnesis y Antecedentes
+                LabelOscuro:
+                    text: 'ANAMNESIS Y ANTECEDENTES'
+                    size_hint_y: None
+                    height: 30
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Desparasitaciones:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_desparasitaciones
+                        multiline: True
+                        size_hint_x: 0.7
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Vacuna:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_vacuna
+                        multiline: True
+                        size_hint_x: 0.7
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Alimentación:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_alimentacion
+                        multiline: True
+                        size_hint_x: 0.7
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Anamnesis:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_anamnesis
+                        multiline: True
+                        size_hint_x: 0.7
+
+                # Signos Vitales
+                LabelOscuro:
+                    text: 'SIGNOS VITALES'
+                    size_hint_y: None
+                    height: 30
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Peso (kg):'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_peso
+                        multiline: False
+                        size_hint_x: 0.3
+                    Label:
+                        text: 'Temperatura (°C):'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_temperatura
+                        multiline: False
+                        size_hint_x: 0.3
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'F.C:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_fc
+                        multiline: False
+                        size_hint_x: 0.3
+                    Label:
+                        text: 'F.R:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_fr
+                        multiline: False
+                        size_hint_x: 0.3
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'P. Femoral:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_p_femoral
+                        multiline: False
+                        size_hint_x: 0.3
+                    Label:
+                        text: 'Yugular:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_yugular
+                        multiline: False
+                        size_hint_x: 0.3
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'T.P.G:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_tpg
+                        multiline: False
+                        size_hint_x: 0.3
+                    Label:
+                        text: 'PS:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_ps
+                        multiline: False
+                        size_hint_x: 0.3
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'PD:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_pd
+                        multiline: False
+                        size_hint_x: 0.3
+                    Label:
+                        text: 'PAM:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_pam
+                        multiline: False
+                        size_hint_x: 0.3
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Mucosas:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_mucosas
+                        multiline: False
+                        size_hint_x: 0.7
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Ganglios:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_ganglios
+                        multiline: False
+                        size_hint_x: 0.7
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Palp. Abdominal:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_palp_abdominal
+                        multiline: False
+                        size_hint_x: 0.7
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Patrón Lesión:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_patron_lesion
+                        multiline: False
+                        size_hint_x: 0.7
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Genitales:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_genitales
+                        multiline: False
+                        size_hint_x: 0.7
+
+                # Diagnósticos y Tratamientos
+                LabelOscuro:
+                    text: 'DIAGNÓSTICOS Y TRATAMIENTOS'
+                    size_hint_y: None
+                    height: 30
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Procedimiento Diagnóstico:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_procedimiento_diagnos
+                        multiline: True
+                        size_hint_x: 0.7
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Pruebas Complementarias:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_pruebas_comple
+                        multiline: True
+                        size_hint_x: 0.7
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Diagnóstico Diferencial:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_diag_diferencial
+                        multiline: True
+                        size_hint_x: 0.7
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Diagnóstico Definitivo:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_diag_definitivo
+                        multiline: True
+                        size_hint_x: 0.7
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Tratamiento Aplicado:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_tratamiento_apli
+                        multiline: True
+                        size_hint_x: 0.7
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Tratamiento Indicado:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_tratamiento_indi
+                        multiline: True
+                        size_hint_x: 0.7
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Próxima Consulta:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: nuevo_proxi_consulta
+                        multiline: False
+                        hint_text: 'YYYY-MM-DD'
+                        size_hint_x: 0.7
+
+                # CUADRICULA 5x8 ANTES DE LOS BOTONES
+                LabelOscuro:
+                    text: 'EXAMENES DE LABORATORIO'
+                    size_hint_y: None
+                    height: 30
+                GridLayout:
+                    cols: 10
+                    rows: 8
+                    size_hint_y: None
+                    height: 8 * 40  # 8 filas de 40dp de alto
+                    spacing: 2, 2
+                    padding: 0
+
+                    # Fila 1
+                    Label:
+                        text: 'Laboratorios'
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: 'HEMATOLOGÍA'
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: 'PERFIL RENAL'
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: 'PERFIL HEPÁTICO'
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: 'OTRAS'
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+
+
+
+                    # Fila 2
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_lab
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'Hb'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_Hb
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'Eosi'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_eosi
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'Urea'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_urea
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'ALT'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_alt
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_otras_20
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+
+
+                    # Fila 3
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    Label:
+                        text: 'Hto'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_hto
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'plaq'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_plaq
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'Creat'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_creat
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'AST'
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_ast
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_otras_30
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+
+
+                    # Fila 4
+
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    Label:
+                        text: 'Leuc'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_leuc
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'VCM'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_vcm
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'BUN'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_bun
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'FA'
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_fa
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_otras_40
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+
+                    # Fila 5
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    Label:
+                        text: 'Neut'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_neut
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'HCM'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_hcm
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'PT'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_pt
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'BT'
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_bt
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_otras_50
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+
+                    # Fila 6
+
+
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    Label:
+                        text: 'Lint'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_lint
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'CHCM'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_chcm
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'Alb'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_alb
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'BI'
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_bi
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_otras_60
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+
+
+                    # Fila 7
+
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    Label:
+                        text: 'Mon'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_mon
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'Descar'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_descar
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'Glo'
+                        color: 1, 1, 1, 1
+                        background_color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_glo
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    Label:
+                        text: 'BD'
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_examen_bd
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+                    TextInput:
+                        text: ''
+                        id: nuevo_otras_70
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+
+
+        # Botones
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 20
+            BotonOscuro:
+                text: 'Guardar'
+                on_release: root.guardar_examen()
+            BotonOscuro:
+                text: 'Cancelar'
+                on_release: root.dismiss()
+
+<DetalleExamenPopup>:
+    size_hint: .9, .95
+    auto_dismiss: False
+    title: 'Detalle del Examen Clínico'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+        
+        ScrollView:
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+                
+                # Anamnesis y Antecedentes
+                LabelOscuro:
+                    text: 'ANAMNESIS Y ANTECEDENTES'
+                    size_hint_y: None
+                    height: 30
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Desparasitaciones:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_desparasitaciones
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'top'
+                        color: 1, 1, 1, 1
+                
+                    Label:
+                        text: 'Vacunas:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_vacuna
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'top'
+                        color: 1, 1, 1, 1
+                
+                    Label:
+                        text: 'Alimentación:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_alimentacion
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'top'
+                        color: 1, 1, 1, 1
+
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Anamnesis:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_anamnesis
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'top'
+                        color: 1, 1, 1, 1
+                
+
+
+
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Peso (kg):'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_peso
+                        size_hint_x: 0.3
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        color: 1, 1, 1, 1
+                    Label:
+                        text: 'Temperatura aaaa (°C):'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_temperatura
+                        size_hint_x: 0.3
+						readonly: True
+                        text_size: self.size
+                        halign: 'left'
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'F.C:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_fc
+                        size_hint_x: 0.3
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        color: 1, 1, 1, 1
+                    Label:
+                        text: 'F.R:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_fr
+                        size_hint_x: 0.3
+                        text_size: self.size
+						readonly: True
+                        halign: 'left'
+                        color: 1, 1, 1, 1
+                # Examen Físico
+                LabelOscuro:
+                    text: 'EXAMEN FÍSICO'
+                    size_hint_y: None
+                    height: 30
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'P. Femoral:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_p_femoral
+                        size_hint_x: 0.3
+                        text_size: self.size
+						readonly: True
+                        halign: 'left'
+                        color: 1, 1, 1, 1
+                    Label:
+                        text: 'Yugular:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_yugular
+                        size_hint_x: 0.3
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'T.P.G:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_tpg
+                        size_hint_x: 0.3
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        color: 1, 1, 1, 1
+                    Label:
+                        text: 'PS:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_ps
+                        size_hint_x: 0.3
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'PD:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_pd
+                        size_hint_x: 0.3
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        color: 1, 1, 1, 1
+                    Label:
+                        text: 'PAM:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_pam
+                        size_hint_x: 0.3
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Mucosas:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_mucosas
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Ganglios:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_ganglios
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Palp. Abdominal:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_palp_abdominal
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Patrón Lesión:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_patron_lesion
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Genitales:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_genitales
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        color: 1, 1, 1, 1
+                # Diagnósticos y Tratamientos
+                LabelOscuro:
+                    text: 'DIAGNÓSTICOS Y TRATAMIENTOS'
+                    size_hint_y: None
+                    height: 30
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Procedimiento Diagnóstico:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_procedimiento_diagnos
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        valign: 'top'
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Pruebas Complementarias:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_pruebas_comple
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        valign: 'top'
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Diagnóstico Diferencial:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_diag_diferencial
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        valign: 'top'
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Diagnóstico Definitivo:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_diag_definitivo
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'top'
+						readonly: True
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Tratamiento Aplicado:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_tratamiento_apli
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        valign: 'top'
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 60
+                    spacing: 10
+                    Label:
+                        text: 'Tratamiento Indicado:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_tratamiento_indi
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'top'
+						readonly: True
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Próxima Consulta:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_proxi_consulta
+                        size_hint_x: 0.7
+                        text_size: self.size
+						readonly: True
+                        halign: 'left'
+                        color: 1, 1, 1, 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Fecha del Examen:'
+                        size_hint_x: 0.3
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_examen_fecha
+                        size_hint_x: 0.7
+                        text_size: self.size
+                        halign: 'left'
+						readonly: True
+                        color: 1, 1, 1, 1
+
+
+                #
+                Label:
+                    text: "EXAMENES DE LABORATORIO"
+                    size_hint_y: None
+                    height: dp(30)
+                    bold: True
+                    color: 1, 1, 1, 1
+
+                GridLayout:
+                    cols: 10
+                    rows: 8
+                    size_hint_y: None
+                    height: 8 * 40  # 8 filas de 40dp de alto
+                    spacing: 2, 2
+                    padding: 0
+
+
+                    # Fila 1
+                    Label:
+                        text: 'Laboratorios'
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: 'HEMATOLOGÍA'
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: 'PERFIL RENAL'
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: ''
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: 'PERFIL HEPÁTICO'
+                        color: 1, 1, 1, 1
+                        background_color: 0.2, 0.2, 0.2, 1
+                    Label:
+                        text: 'OTRAS'
+                        color: 1, 1, 1, 1
+                        background_color: 1, 1, 1, 1
+
+                    # Fila 2
+                    TextInput:
+                        id: detalle_lab
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    Label:
+                        text: "Hb"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_hb
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    Label:
+                        text: "Eosi"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_eosi
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    
+                    Label:
+                        text: "Urea"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_urea
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    Label:
+                        text: "ALT"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_alt
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    TextInput:
+                        id: detalle_otras_20
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    
+               
+                    # Fila 3
+
+                    Label:
+                        text: ""
+                        color: (0, 0, 0, 1)
+                    Label:
+                        text: "Hto"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_hto
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    Label:
+                        text: "Plaq"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_plaq
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    Label:
+                        text: "Creat"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_creat
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    
+                    Label:
+                        text: "AST"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_ast
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    TextInput:
+                        id: detalle_otras_30
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+
+                   # Fila 4
+
+                    Label:
+                        text: ""
+                        color: (0, 0, 0, 1)
+                    Label:
+                        text: "Leuc"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_leuc
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    Label:
+                        text: "VCM"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_vcm
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    Label:
+                        text: "Bun"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_bun
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    
+                    Label:
+                        text: "FA"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_fa
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+
+                    TextInput:
+                        id: detalle_otras_40
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+
+
+                   # Fila 5
+
+                    Label:
+                        text: ""
+                        color: (0, 0, 0, 1)
+                    Label:
+                        text: "Neut"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_neut
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    Label:
+                        text: "HCM"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_hcm
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    Label:
+                        text: "PT"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_pt
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    
+                    Label:
+                        text: "BT"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_bt
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+
+                    TextInput:
+                        id: detalle_otras_50
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+
+
+
+                   # Fila 6
+
+                    Label:
+                        text: ""
+                        color: (0, 0, 0, 1)
+                    Label:
+                        text: "LINF"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_lint
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    Label:
+                        text: "CHCM"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_chcm
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    Label:
+                        text: "Alb"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_alb
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    
+                    Label:
+                        text: "BI"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_bi
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+
+                    TextInput:
+                        id: detalle_otras_60
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+
+                   # Fila 7
+
+                    Label:
+                        text: ""
+                        color: (0, 0, 0, 1)
+                    Label:
+                        text: "Mon"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_mon
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    Label:
+                        text: "Descar"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_descar
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    Label:
+                        text: "Glo"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_glo
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                    
+                    Label:
+                        text: "BD"
+                        color: 1, 1, 1, 1
+                    TextInput:
+                        id: detalle_bd
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+
+                    TextInput:
+                        id: detalle_otras_70
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+
+        #
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+            
+            Button:
+                id: btn_editar
+                text: 'Editar Examen'
+                on_release: root.toggle_edicion()
+            
+            Button:
+                id: btn_guardar
+                text: 'Guardar Cambios'
+                opacity: 0
+                disabled: True
+                on_release: root.guardar_cambios()
+            
+            Button:
+                text: 'Cerrar'
+                on_release: root.dismiss()
+
+<DetallePacientePopup>:
+    size_hint: .8, .9
+    auto_dismiss: False
+    title: 'Detalle del Paciente'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+        
+        # Mensaje de estado
+        Label:
+            id: mensaje_estado
+            size_hint_y: None
+            height: 30
+            text: ''
+            color: (0, 1, 0, 1)
+        
+        ScrollView:
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+                
+                LabelOscuro:
+                    text: 'DATOS DEL PROPIETARIO'
+                    size_hint_y: None
+                    height: 30
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    Label:
+                        text: 'Propietario:'
+                        size_hint_x: 0.3
+                    TextInput:
+                        id: detalle_propietario
+                        size_hint_x: 0.7
+                        multiline: False
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    Label:
+                        text: 'C.I.:'
+                        size_hint_x: 0.3
+                    TextInput:
+                        id: detalle_ci
+                        size_hint_x: 0.7
+                        multiline: False
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    Label:
+                        text: 'Teléfono:'
+                        size_hint_x: 0.3
+                    TextInput:
+                        id: detalle_telefono
+                        size_hint_x: 0.7
+                        multiline: False
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    Label:
+                        text: 'Dirección:'
+                        size_hint_x: 0.3
+                    TextInput:
+                        id: detalle_direccion
+                        size_hint_x: 0.7
+                        multiline: False
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    Label:
+                        text: 'Motivo de consulta:'
+                        size_hint_x: 0.3
+                    TextInput:
+                        id: detalle_motivo
+                        size_hint_x: 0.7
+                        multiline: False
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                
+                LabelOscuro:
+                    text: 'DATOS DEL ANIMAL'
+                    size_hint_y: None
+                    height: 30
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    Label:
+                        text: 'Nombre mascota:'
+                        size_hint_x: 0.3
+                    TextInput:
+                        id: detalle_nombre_mascota
+                        size_hint_x: 0.7
+                        multiline: False
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    Label:
+                        text: 'Especie:'
+                        size_hint_x: 0.3
+                    TextInput:
+                        id: detalle_especie
+                        size_hint_x: 0.7
+                        multiline: False
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    Label:
+                        text: 'Raza:'
+                        size_hint_x: 0.3
+                    TextInput:
+                        id: detalle_raza
+                        size_hint_x: 0.7
+                        multiline: False
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    Label:
+                        text: 'Sexo:'
+                        size_hint_x: 0.3
+                    TextInput:
+                        id: detalle_sexo
+                        size_hint_x: 0.7
+                        multiline: False
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    Label:
+                        text: 'Edad:'
+                        size_hint_x: 0.3
+                    TextInput:
+                        id: detalle_edad
+                        size_hint_x: 0.7
+                        multiline: False
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    Label:
+                        text: 'Pelaje:'
+                        size_hint_x: 0.3
+                    TextInput:
+                        id: detalle_pelaje
+                        size_hint_x: 0.7
+                        multiline: False
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    Label:
+                        text: 'C.C.:'
+                        size_hint_x: 0.3
+                    TextInput:
+                        id: detalle_cc
+                        size_hint_x: 0.7
+                        multiline: False
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    Label:
+                        text: 'Enfermedad:'
+                        size_hint_x: 0.3
+                    TextInput:
+                        id: detalle_enfermedad
+                        size_hint_x: 0.7
+                        multiline: False
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    Label:
+                        text: 'Tratamiento:'
+                        size_hint_x: 0.3
+                    TextInput:
+                        id: detalle_tratamiento
+                        size_hint_x: 0.7
+                        multiline: False
+                        readonly: True
+                        background_color: (0.9, 0.9, 0.9, 1)
+    
+		BoxLayout:
+			size_hint_y: None
+			height: 50
+			spacing: 10
+			BotonOscuro:
+				id: btn_editar
+				text: 'Editar'
+				on_release: root.toggle_edicion()
+			BotonOscuro:
+				id: btn_guardar
+				text: 'Guardar'
+				opacity: 0
+				disabled: True
+				on_release: root.guardar_cambios()
+			BotonOscuro:
+				text: 'Exámenes Clínicos'
+				on_release: root.mostrar_examenes_clinicos()
+            BotonOscuro:
+				text: 'Historias'
+				on_release: root.mostrar_historias_medicas()
+			BotonOscuro:
+				text: 'Recipes'
+				on_release: root.eliminar_paciente()
+			BotonOscuro:
+				text: 'Cerrar'
+				on_release: root.dismiss()
+
+<VistaPacientes>:
+    name: 'Pacientes'
+    BoxLayout:
+        orientation: 'vertical'
+        
+        # Sección de filtros
+        BoxLayout:
+            size_hint_y: .1
+            spacing: 5
+            padding: 5
+            
+            LabelOscuro:
+                text: 'Filtros:'
+                size_hint_x: .15
+            
+            TextInput:
+                id: filtro_propietario
+                hint_text: 'Buscar por propietario'
+                multiline: False
+                size_hint_x: .25
+                on_text_validate: root.filtrar_pacientes()
+            
+            TextInput:
+                id: filtro_ci
+                hint_text: 'Buscar por C.I.'
+                multiline: False
+                size_hint_x: .2
+                on_text_validate: root.filtrar_pacientes()
+            
+            TextInput:
+                id: filtro_mascota
+                hint_text: 'Buscar por mascota'
+                multiline: False
+                size_hint_x: .25
+                on_text_validate: root.filtrar_pacientes()
+            
+            BotonOscuro:
+                text: 'Filtrar'
+                size_hint_x: .1
+                on_release: root.filtrar_pacientes()
+            
+            BotonOscuro:
+                text: 'Limpiar'
+                size_hint_x: .05
+                on_release: root.limpiar_filtros()
+        
+        BoxLayout:
+            # Lista de pacientes
+            BoxLayout:
+                padding: .5
+                orientation: 'vertical'
+                
+                # Encabezados
+                BoxLayout:
+                    size_hint_y: .05
+                    spacing: .5
+                    LabelOscuro:
+                        text: '#'
+                        size_hint_x: .05
+                    LabelOscuro:
+                        text: 'Propietario'
+                        size_hint_x: .35
+                    LabelOscuro:
+                        text: 'C.I.'
+                        size_hint_x: .2
+                    LabelOscuro:
+                        text: 'Mascota'
+                        size_hint_x: .25
+                    LabelOscuro:
+                        text: 'Teléfono'
+                        size_hint_x: .15
+                
+                # Lista
+                AdminRV:
+                    id: rv_pacientes
+                    size_hint_y: .89
+                    viewclass: 'SelectablePacienteLabel'
+            
+            # Botones laterales
+            BoxLayout:
+                spacing: .5
+                size_hint_x: .2
+                orientation: 'vertical'
+                padding: .5
+                
+                BotonOscuro:
+                    text: ' Ver Detalle'
+                    on_release: root.mostrar_detalle_paciente()
+                
+                BotonOscuro:
+                    text: ' Eliminar Paciente'
+                    background_color: (0.9, 0.3, 0.3, 1)
+                    on_release: root.eliminar_paciente()  # ✅ Conectado al nuevo método
+                
+                BotonOscuro:
+                    text: ' Actualizar Lista'
+
+                    on_release: root.cargar_pacientes()
+
+<NuevaHistoriaDerPopup>:
+    size_hint: .9, .95
+    auto_dismiss: False
+    title: 'Nueva Historia Dermatológica'
+    
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: dp(10)
+            padding: dp(20)
+            size_hint_y: None
+            height: self.minimum_height
+            
+            # Mensaje de estado
+            Label:
+                id: mensaje_estado
+                text: ''
+                size_hint_y: None
+                height: dp(30)
+                color: (1, 0, 0, 1)
+            
+            # Prurito Escala
+            BoxLayout:
+                size_hint_y: None
+                height: dp(40)
+                spacing: dp(10)
+                Label:
+                    text: 'Prurito Escala:'
+                    size_hint_x: 0.3
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                Spinner:
+                    id: prurito_escala
+                    text: '0'
+                    values: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+                    size_hint_x: 0.7
+            
+            # Control Ectoparásitos
+                Label:
+                    text: 'Control Ectoparásitos:'
+                    size_hint_x: 0.3
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                TextInput:
+                    id: control_ectoparasitos
+                    multiline: False
+                    size_hint_x: 0.7
+            
+            # Otros Animales afectados
+                Label:
+                    text: 'Otros Animales afectados:'
+                    size_hint_x: 0.3
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                TextInput:
+                    id: otros_animales_afectados
+                    multiline: False
+                    size_hint_x: 0.7
+            
+            # Estilo de vida
+
+                Label:
+                    text: 'Estilo de vida:'
+                    size_hint_x: 0.3
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                TextInput:
+                    id: estilo_vida
+                    multiline: False
+                    size_hint_x: 0.7
+            
+            # Paseos
+            BoxLayout:
+                size_hint_y: None
+                height: dp(40)
+                spacing: dp(10)
+                Label:
+                    text: 'Paseos:'
+                    size_hint_x: 0.3
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                TextInput:
+                    id: paseos
+                    multiline: False
+                    size_hint_x: 0.7
+            # Baños
+                Label:
+                    text: 'Baños:'
+                    size_hint_x: 0.3
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                TextInput:
+                    id: banos
+                    multiline: False
+                    size_hint_x: 0.7
+            
+            # Frecuencia
+
+                Label:
+                    text: 'Frecuencia:'
+                    size_hint_x: 0.3
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                TextInput:
+                    id: frecuencia
+                    multiline: False
+                    size_hint_x: 0.7
+            
+            # Productos Usados
+            BoxLayout:
+                size_hint_y: None
+                height: dp(40)
+                spacing: dp(10)
+                Label:
+                    text: 'Productos Usados:'
+                    size_hint_x: 0.3
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                TextInput:
+                    id: productos_usados
+                    multiline: False
+                    size_hint_x: 0.7
+            
+            # Tratamientos Previos
+                Label:
+                    text: 'Tratamientos Previos:'
+                    size_hint_x: 0.3
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                TextInput:
+                    id: tratamientos_previos
+                    multiline: False
+                    size_hint_x: 0.7
+            
+            # Examen Físico
+            BoxLayout:
+                size_hint_y: None
+                height: dp(40)
+                spacing: dp(10)
+                Label:
+                    text: 'Examen Físico:'
+                    size_hint_x: 0.3
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                TextInput:
+                    id: examen_fisico
+                    multiline: False
+                    size_hint_x: 0.7
+            
+            # Estado Actual
+   
+                Label:
+                    text: 'Estado Actual:'
+                    size_hint_x: 0.3
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                TextInput:
+                    id: estado_actual
+                    multiline: False
+                    size_hint_x: 0.7
+            
+            # Patrón Distribución
+            Label:
+                text: 'Patrón Distribución:'
+                size_hint_y: None
+                height: dp(30)
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                bold: True
+            
+            # Opciones de Patrón (CheckBoxes)
+            BoxLayout:
+                size_hint_y: None
+                height: dp(40)
+                spacing: dp(10)
+                
+                BoxLayout:
+                    Label:
+                        text: 'Simétrico Bilateral'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                    TextInput:
+                        id: simetrico
+                        multiline: False
+         
+                
+                    Label:
+                        text: 'Asimétrico'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+
+                    TextInput:
+                        id: asimetrico
+                        multiline: False
+                     
+                
+                    Label:
+                        text: 'Generalizado'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+
+                    TextInput:
+                        id: generalizado
+                        multiline: False
+            BoxLayout:
+                size_hint_y: None
+                height: dp(40)
+                spacing: dp(10)
+                
+          
+                BoxLayout:
+
+                    Label:
+                        text: 'Focal'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                    TextInput:
+                        id: focal
+                        multiline: False
+             
+        
+                    Label:
+                        text: 'Multifocal'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                    TextInput:
+                        id: multifocal
+                        multiline: False
+             
+                    Label:
+                        text: 'Regional'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                    TextInput:
+                        id: regional
+                        multiline: False
+             
+
+
+            # Primera cuadrícula
+            Label:
+                text: 'LESIONES PRIMARIAS:'
+                size_hint_y: None
+                height: dp(30)
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                bold: True
+            
+            GridLayout:
+                cols: 4
+                rows: 5
+                size_hint_y: None
+                height: dp(200)
+                spacing: dp(2)
+                
+                # Fila 1
+                Label:
+                    text: "ALOPECIA"
+                    multiline: False
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid1
+                Label:
+                    text: "NÓDULO"
+                    multiline: False
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid2
+                    multiline: False
+                # Fila 2
+                Label:
+                    text: "AMPOLLA"
+                    multiline: False
+                CheckBox:
+                    id: grid3
+                    multiline: False
+                Label:
+                    text: "PÁPULA"
+                    color: (1,1,1,1)
+                    multiline: False
+                CheckBox:
+                    id: grid4
+                    multiline: False
+ 
+                
+                # Fila 3
+                Label:
+                    text: "ERITEMA"
+                    color: (1,1,1,1)
+
+                CheckBox:
+                    id: grid5
+   
+                Label:
+                    text: "PÓSTULA"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid6
+
+                # Fila 4
+                Label:
+                    text: "MANCHA"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid7
+                    multiline: False
+                Label:
+                    text: "VESICULA"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid8
+
+                
+                # Fila 5
+                Label:
+                    text: "MÁCULA"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid9
+                Label:
+                    text: "TUMOR"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid10
+            
+            # Segunda cuadrícula 6x6
+            Label:
+                text: 'LESIONES SECUNDARIAS:'
+                size_hint_y: None
+                height: dp(30)
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                bold: True
+            
+            GridLayout:
+                cols: 6
+                rows: 5
+                size_hint_y: None
+                height: dp(240)
+                spacing: dp(2)
+                
+                # Fila 1
+                Label:
+                    text: "ABSESO"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid11
+                Label:
+                    text: "ÚLCERA"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid12
+                Label:
+                    text: "COLLARÍN EPIDÉRMICO"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid13
+                
+                # Fila 2
+                Label:
+                    text: "QUISTE"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid14
+                Label:
+                    text: "COSTRA"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid15
+                Label:
+                    text: "PIGMENTACIÓN HIPER"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid16
+                
+                # Fila 3
+                Label:
+                    text: "EROSIÓN"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid17
+                Label:
+                    text: "CICATRIZ"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid18
+                Label:
+                    text: "PIGMENTACIÓN HIPO"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid19
+                
+                # Fila 4
+                Label:
+                    text: "ESCAMA"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid20
+                Label:
+                    text: "CALLO"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid21
+                Label:
+                    text: "QUERATOSIS HIPER"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid22
+                
+                # Fila 5
+                Label:
+                    text: "LIQUENIFICACIÓN"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid23
+                Label:
+                    text: "QUERATOSIS HIPO"
+                    color: (1,1,1,1)
+                CheckBox:
+                    id: grid24
+                Label:
+                    text: ""
+                    color: (1,1,1,1)
+                Label:
+                    text: ""
+                    color: (1,1,1,1)
+                
+            
+            # Diagnóstico diferencial
+            BoxLayout:
+                size_hint_y: None
+                height: dp(40)
+                spacing: dp(10)
+                Label:
+                    text: 'Diagnóstico diferencial:'
+                    size_hint_x: 0.3
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                TextInput:
+                    id: diag_diferencial
+                    multiline: False
+                    size_hint_x: 0.7
+            
+            # Pruebas Complementarias
+            Label:
+                text: 'Pruebas Complementarias:'
+                size_hint_y: None
+                height: dp(30)
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                bold: True
+
+            BoxLayout:
+                size_hint_y: None
+                height: 40
+
+
+                Label:
+                    text: 'Tricograma'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    size_hint_x: 0.4
+
+            BoxLayout:
+                size_hint_y: None
+                height: 40
+
+
+                Label:
+                    text: 'Anagen (%)'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    size_hint_x: 0.4
+
+                TextInput:
+                    id: anagen
+                    multiline: False
+                    input_filter: 'float'
+                    size_hint_x: 0.6
+
+
+                Label:
+                    text: 'Teogen (%)'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    size_hint_x: 0.4
+
+                TextInput:
+                    id: teogen
+                    multiline: False
+                    input_filter: 'float'
+                    size_hint_x: 0.6
+
+                Label:
+                    text: 'Tricomexis (%)'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    size_hint_x: 0.4
+
+                TextInput:
+                    id: tricomexis
+                    multiline: False
+                    input_filter: 'float'
+                    size_hint_x: 0.6
+
+
+                Label:
+                    text: 'Melanina (%)'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    size_hint_x: 0.4
+
+                TextInput:
+                    id: melanina
+                    multiline: False
+                    input_filter: 'float'
+                    size_hint_x: 0.6
+
+                Label:
+                    text: 'Demodex (%)'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    size_hint_x: 0.4
+
+                TextInput:
+                    id: demodex
+                    multiline: False
+                    input_filter: 'float'
+                    size_hint_x: 0.6
+
+
+            BoxLayout:
+                size_hint_y: None
+                height: 40
+                Label:
+                    text: 'TRICOGRAFÍA'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    bold: True
+                TextInput:
+                    id: tricografia
+                    multiline: False
+
+                Label:
+                    text: 'LÁMPARA WOO'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    bold: True
+                TextInput:
+                    id: lampara_woo
+                    multiline: False
+
+            # Sección 4: Rasgado Cutáneo
+            BoxLayout:
+                size_hint_y: None
+                height: 40
+                Label:
+                    text: 'RASPADO CUTÁNEO'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    bold: True
+
+            BoxLayout:
+                size_hint_y: None
+                height: 40
+
+                Label:
+                    text: 'Agentes'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                TextInput:
+                    id: agentes
+                    multiline: False
+
+                Label:
+                    text: 'Cabeza'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                TextInput:
+                    id: cabeza
+                    multiline: False
+
+                Label:
+                    text: 'Cuello'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                TextInput:
+                    id: cuello
+                    multiline: False
+
+                Label:
+                    text: 'Abdomen'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                TextInput:
+                    id: abdomen
+                    multiline: False
+
+            # Separador: Extremidades
+            Label:
+                text: 'EXTREMIDADES'
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.size
+                bold: True
+                color: 1, 1, 1, 1
+                size_hint_y: None
+                height: 30
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 0
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+            # Subsección: Extremidades (D.D, D.I, P.D, P.I)
+
+            BoxLayout:
+                size_hint_y: None
+                height: 40
+
+
+                Label:
+                    text: 'D.D (Delantera Derecha)'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                TextInput:
+                    id: dd
+                    multiline: False
+
+                Label:
+                    text: 'D.I (Delantera Izquierda)'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                TextInput:
+                    id: di
+                    multiline: False
+
+                Label:
+                    text: 'P.D (Trasera Derecha)'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                TextInput:
+                    id: pd
+                    multiline: False
+
+                Label:
+                    text: 'P.I (Trasera Izquierda)'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                TextInput:
+                    id: pi
+                    multiline: False
+
+                Label:
+                    text: 'Otras'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                TextInput:
+                    id: otras
+                    multiline: False
+
+            BoxLayout:
+                size_hint_y: None
+                height: 80
+
+                Label:
+                    text: 'NOTAS'
+                    halign: 'left'
+                    valign: 'middle'
+                    size_hint_x: 0.1
+                    text_size: self.size
+                TextInput:
+                    id: notas
+                    multiline: True
+                    size_hint_x: 0.9
+
+
+            # Botones de acción
+            BoxLayout:
+                size_hint_y: None
+                height: dp(60)
+                spacing: dp(10)
+                padding: [dp(0), dp(20), dp(0), dp(0)]
+                
+                Button:
+                    text: 'Guardar Historia'
+                    background_color: (0.2, 0.7, 0.3, 1)
+                    on_release: root.guardar_historia_dermatologica()
+                
+                Button:
+                    text: ' Limpiar Formulario'
+                    background_color: (0.8, 0.6, 0.2, 1)
+                    on_release: root.limpiar_formulario()
+                
+                Button:
+                    text: 'Cancelar'
+                    background_color: (0.6, 0.6, 0.6, 1)
+                    on_release: root.dismiss()
+
+
+
+
+
+<SelectableAgendaLabel>:
+    canvas.before:
+        Color:
+            rgba: hex('#E8F5E8') if self.selected else hex('#F0F0F0')
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    Label:
+        id: _hashtag
+        size_hint_x: .05
+        color: (0,0,0,1)
+    Label:
+        id: _nombre_propietario
+        size_hint_x: .25
+        color: (0,0,0,1)
+    Label:
+        id: _nombre_mascota
+        size_hint_x: .2
+        color: (0,0,0,1)
+    Label:
+        id: _telefono
+        size_hint_x: .15
+        color: (0,0,0,1)
+    Label:
+        id: _fecha_cita
+        size_hint_x: .2
+        color: (0,0,0,1)
+    Label:
+        id: _dias_restantes
+        size_hint_x: .15
+        color: (0,0,0,1)
+        bold: True
+
+<VistaAgenda>:
+    name: 'Agenda'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        
+        # Título y contador
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+            LabelOscuro:
+                text: 'AGENDA DE CONSULTAS'
+                size_hint_x: 0.6
+                font_size: '18sp'
+                bold: True
+            Label:
+                id: contador_citas
+                text: 'Cargando...'
+                size_hint_x: 0.4
+                color: (0,0,0,1)
+        
+        # Barra de búsqueda
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+            Label:
+                text: 'Buscar:'
+                size_hint_x: None
+                width: 80
+                color: (0,0,0,1)
+            TextInput:
+                id: filtro_busqueda
+                multiline: False
+                hint_text: 'Nombre del propietario o mascota'
+                on_text: root.filtrar_agenda(self.text)
+        
+        # Encabezados
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            spacing: 5
+            LabelOscuro:
+                text: '#'
+                size_hint_x: .05
+            LabelOscuro:
+                text: 'Propietario'
+                size_hint_x: .25
+            LabelOscuro:
+                text: 'Mascota'
+                size_hint_x: .2
+            LabelOscuro:
+                text: 'Teléfono'
+                size_hint_x: .15
+            LabelOscuro:
+                text: 'Fecha Cita'
+                size_hint_x: .2
+            LabelOscuro:
+                text: 'Estado'
+                size_hint_x: .15
+        
+        # Lista de citas
+        AdminRV:
+            id: rv_agenda
+            viewclass: 'SelectableAgendaLabel'
+        
+        # Botones de acción
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+            BotonOscuro:
+                text: 'Todas las Citas'
+                on_release: root.cargar_agenda()
+            BotonOscuro:
+                text: 'Hoy'
+                on_release: root.citas_de_hoy()
+            BotonOscuro:
+                text: 'Próxima Semana'
+                on_release: root.proxima_semana()
+            BotonOscuro:
+                text: 'Ver Detalle'
+                on_release: root.ver_detalle_cita()
