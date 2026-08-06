@@ -1,0 +1,53 @@
+
+Ideas de proyectos:
+---
+
+### 🏆 El proyecto insignia (el que yo pondría primero)
+
+**"GoSentinel Agent" — Agente FIM + envío de eventos a Microsoft Sentinel**
+
+- **Qué hace:** agente cross-platform en Go que monitorea directorios críticos (`fsnotify`), calcula hashes SHA-256, detecta creaciones/modificaciones/borrados y envía los eventos a Sentinel como logs personalizados.
+- **Pipeline completo:** Agente Go → **Azure Monitor Logs Ingestion API** (con DCR/DCE y autenticación vía identidad administrada/`azidentity`) → tabla custom (`GoFIM_CL`) → **reglas de detección KQL** → **Logic Apps (SOAR)** para respuesta automática.
+- **Por qué es perfecto:** en un solo repo demuestras Go (concurrencia, crypto, APIs REST), Sentinel, KQL, SOAR e identidades administradas → tocas los 3 dominios del AZ-500 de una vez.
+- **Nota técnica:** usa la *Logs Ingestion API* moderna (DCR/DCE), no la vieja *HTTP Data Collector API* que está en desuso. Además, al autenticar con Entra ID, refuerzas el tema IAM.
+
+---
+
+### ☁️ Go + Azure (directamente alineados al AZ-500)
+
+1. **Auditor RBAC/IAM de Azure y Entra ID** — CLI con `cobra` y el Azure SDK for Go: enumera role assignments, detecta `Owner` / `User Access Administrator` excesivos, cuentas sin MFA, service principals obsoletos y genera un reporte HTML/JSON. → *Dominio: identidades y acceso.*
+2. **Escáner de postura cloud ("mini Defender for Cloud")** — revisa storage accounts con acceso público, NSGs abiertos a `0.0.0.0/0`, Key Vaults sin soft delete/purge protection, VMs sin managed identity, y mapea hallazgos al Azure Security Benchmark. → *Dominio: red, storage y compute.*
+3. **SOAR responder en Go** — servicio webhook que una Logic App invoca al dispararse una alerta de Sentinel: bloquea la IP en el NSG, deshabilita el usuario vía Microsoft Graph y deja todo auditado. Demuestra respuesta automatizada más allá de los playbooks nativos. → *Dominio: operaciones de seguridad.*
+
+---
+
+### 🛡️ Ciberseguridad pura en Go (para lucir el lenguaje)
+
+4. **Port scanner concurrente + banner grabbing** — goroutines, channels, timeouts y reporte JSON/HTML. El clásico que mejor demuestra la concurrencia de Go.
+5. **Secrets scanner (gitleaks-lite)** — regex + entropía de Shannon para detectar claves, connection strings de Azure y tokens en repos o plantillas ARM/Bicep.
+6. **Honeypot HTTP/SSH** — registra intentos de ataque en SQLite (pure Go: `modernc.org/sqlite`) y alimenta watchlists de Sentinel o feeds de threat intel.
+7. **Auditor TLS/SSL** — vencimiento de certificados, protocolos débiles (TLS 1.0/1.1) y cifrados inseguros sobre una flota de endpoints.
+8. **File Integrity Monitor standalone** — la versión simple del insignia: SHA-256 + alertas locales. Ideal como primer paso.
+
+---
+
+### 🧰 Librerías clave que vas a usar
+
+- CLI: `spf13/cobra`, `spf13/viper`
+- Azure: `Azure/azure-sdk-for-go` (`azidentity`, `armauthorization`, `armstorage`, `armnetwork`)
+- Entra ID: Microsoft Graph (REST o SDK)
+- Sistema de archivos: `fsnotify`
+- Logging: `log/slog` (stdlib)
+
+### 📌 Tips para que pesen en el portafolio
+
+- README con **diagrama de arquitectura** (Mermaid o draw.io), GIF de demo y pasos de ejecución.
+- Incluye las **queries KQL y capturas de las detecciones en Sentinel** — ese es tu diferenciador frente a cualquier dev Go promedio.
+- Métricas medibles: *"generó X detecciones"*, *"automatiza Y controles del benchmark"*.
+- Binarios en GitHub Releases + Dockerfile.
+
+---
+
+**Hoja de ruta sugerida:** empieza con el **#8** (FIM standalone, 1–2 semanas) → agrégale el envío a Sentinel y lo conviertes en el **insignia** → luego el **auditor RBAC (#1)**. Con eso tienes 3 repos que se refuerzan entre sí y cuentan una historia coherente con tu certificación.
+
+¿Con cuál quieres arrancar? Dime y te ayudo con el código base, la estructura del repo o las reglas KQL. 🚀
